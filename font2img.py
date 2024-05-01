@@ -105,10 +105,10 @@ def draw_font2font_example(ch, src_font, dst_font, canvas_size, x_offset, y_offs
         return example_img
     else:
         example_src_img = Image.new("RGB", (canvas_size, canvas_size), (255, 255, 255))
-        example_src_img.paste(src_img, (0, 0))
+        example_src_img.paste(src_img, (int(0.1 * canvas_size), int(0.1 * canvas_size)))
         example_src_img = example_src_img.convert('L')
         example_dst_img = Image.new("RGB", (canvas_size, canvas_size), (255, 255, 255))
-        example_dst_img.paste(dst_img, (0, 0))
+        example_dst_img.paste(dst_img, (int(0.1 * canvas_size), int(0.1 * canvas_size)))
         example_dst_img = example_dst_img.convert('L')
         return example_src_img, example_dst_img
 
