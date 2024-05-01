@@ -9,6 +9,7 @@ python trainZi2zi.py \
 --gpu_ids cuda:0 \
 --epoch $epoch \
 --batch_size $batch_size \
+--augment bold rotate blur flip\
 --sample_steps $sample_steps \
 --checkpoint_steps $checkpoint_steps \
 --input_nc 1 \

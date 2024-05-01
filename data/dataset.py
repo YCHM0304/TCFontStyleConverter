@@ -14,9 +14,9 @@ from util.bytesIO import PickledImageProvider, bytes_to_file
 
 
 class DatasetFromObj(data.Dataset):
-    def __init__(self, obj_path, input_nc=3, augment=False, bold=False, rotate=False, blur=False, start_from=0):
+    def __init__(self, obj_path, input_nc=3, augment=False, bold=False, rotate=False, blur=False, flip=False, start_from=0):
         if augment:
-            print('Using data augmentation: bold: {}, rotate: {}, blur: {}'.format(bold, rotate, blur))
+            print('Using data augmentation: bold: {}, rotate: {}, blur: {}, flip: {}'.format(bold, rotate, blur, flip))
         super(DatasetFromObj, self).__init__()
         self.image_provider = PickledImageProvider(obj_path)
         self.input_nc = input_nc
@@ -30,6 +30,7 @@ class DatasetFromObj(data.Dataset):
         self.bold = bold
         self.rotate = rotate
         self.blur = blur
+        self.flip = flip
         self.start_from = start_from
 
     def __getitem__(self, index):
@@ -74,8 +75,7 @@ class DatasetFromObj(data.Dataset):
                 img_B = img_B.crop((shift_x, shift_y, shift_x + w, shift_y + h))
 
                 if self.rotate and random.random() > 0.9:
-                    angle_list = [0, 180]
-                    random_angle = random.choice(angle_list)
+                    random_angle = random.randrange(-180, 180, 5)
                     if self.input_nc == 3:
                         fill_color = (255, 255, 255)
                     else:
@@ -88,6 +88,12 @@ class DatasetFromObj(data.Dataset):
                     sigma = random.choice(sigma_list)
                     img_A = img_A.filter(ImageFilter.GaussianBlur(radius=sigma))
                     img_B = img_B.filter(ImageFilter.GaussianBlur(radius=sigma))
+                if self.flip and random.random() > 0.7:
+                    img_A = img_A.transpose(Image.FLIP_LEFT_RIGHT)
+                    img_B = img_B.transpose(Image.FLIP_LEFT_RIGHT)
+                elif self.flip and random.random() < 0.2:
+                    img_A = img_A.transpose(Image.FLIP_TOP_BOTTOM)
+                    img_B = img_B.transpose(Image.FLIP_TOP_BOTTOM)
 
                 img_A = transforms.ToTensor()(img_A)
                 img_B = transforms.ToTensor()(img_B)
