@@ -8,6 +8,8 @@ python ./font2img.py --src_font ./datasets/charset/src/$src_font.ttf \
                    --charset CN \
                    --sample_count $sample_count \
                    --sample_dir ./datasets/examples \
+                   --canvas_size 512 \
+                   --char_size 512 \
                    --label $label \
                    --filter \
                    --shuffle \
