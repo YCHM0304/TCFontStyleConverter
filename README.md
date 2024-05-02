@@ -148,7 +148,7 @@ datasets
 Then, run the following command to convert the source font and target fonts to images:
 
 ```bash
-bash ./scripts/run_font2font.sh sample_number src_font dst_font label
+bash ./scripts/run_font2font.sh <sample_number> <src_font> <dst_font> <label>
 ```
 - `sample_number`: the number of samples to generate
 - `src_font`: the name of the source font
@@ -173,7 +173,7 @@ bash ./scripts/run_font2font.sh 1000 d 2
 After running all the commands, run the following command to generate the dataset:
 
 ```bash
-bash ./scripts/run_package.sh split_ratio
+bash ./scripts/run_package.sh <split_ratio>
 ```
 `split_ratio`: the ratio of the training set to the validation set
 
@@ -253,12 +253,13 @@ experiment
 Zi2zi has two ways to test the model. The first way is to test the model with the validation set. Run the following command to test the model with the validation set:
 
 ```bash
-bash ./scripts/run_test_zi2zi.sh
+bash ./scripts/run_infer.sh <resume>
 ```
+`resume`: which step of checkpoint to generate the image
 The second way is to test the model with the source font that you can type any Chinese characters you want to convert to the target font. Run the following command to test the model with the source font:
 
 ```bash
-bash ./scripts/run_test_zi2zi.sh src_txt resume label
+bash ./scripts/run_infer_run_txt.sh <src_txt> <resume> <label>
 ```
 - `src_txt`: type any Chinese characters you want to convert to the target font
 - `resume`: which step of checkpoint to generate the image
